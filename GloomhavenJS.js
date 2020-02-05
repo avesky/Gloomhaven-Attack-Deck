@@ -129,9 +129,7 @@ const myDeck = {
 	}
 };
 const draw = document.getElementById('draw');
-draw.addEventListener('click', function() {
-	myDeck.drawCard();
-});
+draw.addEventListener('click', myDeck.drawCard());
 const shuffleAll = document.getElementById('shuffleall');
 draw.addEventListener('click', function() {
 	myDeck.combineAndShuffle();
