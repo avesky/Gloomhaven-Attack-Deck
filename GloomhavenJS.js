@@ -1,5 +1,8 @@
 const gloomDeck = [];
 
+const deckDisplay = document.getElementById('ulInsert');
+const discardDeckDisplay = document.getElementById('ulInsert1');
+
 const plus1 = document.getElementById('plus1');
 const plus2 = document.getElementById('plus2');
 const plus3 = document.getElementById('plus3');
@@ -77,30 +80,57 @@ minus9.addEventListener('click', function() {
 
 plus1.addEventListener('click', function() {
 	gloomDeck.push('-2');
+	let z = document.createElement('li');
+	z.innerText = '-2';
+	deckDisplay.appendChild(z);
 });
 plus2.addEventListener('click', function() {
 	gloomDeck.push('-1');
+	let z = document.createElement('li');
+	z.innerText = '-1';
+	deckDisplay.appendChild(z);
 });
 plus3.addEventListener('click', function() {
 	gloomDeck.push('0');
+	let z = document.createElement('li');
+	z.innerText = '0';
+	deckDisplay.appendChild(z);
 });
 plus4.addEventListener('click', function() {
 	gloomDeck.push('1');
+	let z = document.createElement('li');
+	z.innerText = '1';
+	deckDisplay.appendChild(z);
 });
 plus5.addEventListener('click', function() {
 	gloomDeck.push('2');
+	let z = document.createElement('li');
+	z.innerText = '2';
+	deckDisplay.appendChild(z);
 });
 plus6.addEventListener('click', function() {
 	gloomDeck.push('Miss');
+	let z = document.createElement('li');
+	z.innerText = 'Miss';
+	deckDisplay.appendChild(z);
 });
 plus7.addEventListener('click', function() {
 	gloomDeck.push('x2');
+	let z = document.createElement('li');
+	z.innerText = 'x2';
+	deckDisplay.appendChild(z);
 });
 plus8.addEventListener('click', function() {
 	gloomDeck.push('Curse');
+	let z = document.createElement('li');
+	z.innerText = 'Curse';
+	deckDisplay.appendChild(z);
 });
 plus9.addEventListener('click', function() {
 	gloomDeck.push('Bless');
+	let z = document.createElement('li');
+	z.innerText = 'Bless';
+	deckDisplay.appendChild(z);
 });
 
 const myDeck = {
@@ -113,24 +143,48 @@ const myDeck = {
 	},
 	drawCard() {
 		const card = this.deck.pop();
-		if (card === 'Curse' || card === 'Bless') {
+		if (card === 'Curse' || card === 'Bless' || card === undefined) {
 			this.removedDeck.push(card);
 		} else this.discardDeck.push(card);
 	},
 	combineAndShuffle() {
 		this.deck = this.deck.concat(this.discardDeck);
+		this.discardDeck = [];
 		return this.shuffle(this.deck);
 	},
 	shuffle(arr) {
 		for (let i = arr.length - 1; i > 0; i--) {
 			let j = Math.floor(Math.random() * (i + 1));
 			[ arr[i], arr[j] ] = [ arr[j], arr[i] ];
+			console.log(arr);
 		}
 	}
 };
 const draw = document.getElementById('draw');
-draw.addEventListener('click', myDeck.drawCard());
-const shuffleAll = document.getElementById('shuffleall');
 draw.addEventListener('click', function() {
+	let element = document.getElementById('ulInsert1');
+	while (element.firstChild) {
+		element.removeChild(element.firstChild);
+	}
+	let element2 = document.getElementById('ulInsert');
+	while (element2.firstChild) {
+		element2.removeChild(element2.firstChild);
+	}
+	myDeck.drawCard();
+	for (let el of myDeck.discardDeck) {
+		z = document.createElement('li');
+		z.innerText = el;
+		discardDeckDisplay.appendChild(z);
+		console.log(myDeck.deck, myDeck.discardDeck);
+	}
+	for (let el of myDeck.deck) {
+		z = document.createElement('li');
+		z.innerText = el;
+		deckDisplay.appendChild(z);
+		console.log(myDeck.deck, myDeck.discardDeck);
+	}
+});
+const shuffleAll = document.getElementById('shuffleall');
+shuffleAll.addEventListener('click', function() {
 	myDeck.combineAndShuffle();
 });
